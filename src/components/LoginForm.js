@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-const StyledLoginForm = styled.form``
+const StyledLoginForm = styled.form`
+`
 
 const LoginForm = (props) => {
     const {values, submit, change, disabled, errors } = props;
@@ -39,10 +40,7 @@ const LoginForm = (props) => {
                 </label>
                 <span className="errors">{errors.password}</span>
                 <button disabled={disabled}>Log In</button>
-            </form>
-
         </StyledLoginForm>
-        
     )
 }
 
