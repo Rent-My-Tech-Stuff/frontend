@@ -6,7 +6,7 @@ You can find the deployed project at [Rent My Tech Stuff ](https://rent-my-tech-
 
 # Product Vision Document
 
-[link to PVD] (https://docs.google.com/document/d/1GenCLHKL8uin8f87p8cNLFjG7pMf3KSwdbHlqeVaHXo/edit)
+[link to PVD](https://docs.google.com/document/d/1GenCLHKL8uin8f87p8cNLFjG7pMf3KSwdbHlqeVaHXo/edit)
 
 ## Contributors
 
