@@ -29,7 +29,7 @@ function OwnerHome() {
   }
 
   const Edit = () => {
-    setIsAdding(!isAdding)
+    setIsEditing(!isEditing)
   }
   //edit currently has no functionality at all so it's only use 
   //at this point is just a cancel 'add new' button
@@ -140,7 +140,7 @@ function OwnerHome() {
 
         
         
-          <button onClick={Edit}>Edit Item</button>
+          <button onClick={Add}>Edit Item</button>
 
         
           <Link to="/">
