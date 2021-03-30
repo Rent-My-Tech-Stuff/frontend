@@ -118,7 +118,7 @@ function OwnerHome() {
         <h1>Owner Home</h1>
        
           
-          <button class="addButton" onClick={Add}>
+          <button className="addButton" onClick={Add}>
             Add New Item
           </button> 
           
@@ -127,10 +127,10 @@ function OwnerHome() {
           {/* {isAdding ? HideButton : null} */}
 
 
-          {posts.map(post => (
+          {posts.map((post, i) => (
           <div 
             className='post-container'
-            key={post.id}>
+            key={i}>
     
           <h2>{post.name}</h2>
           <p>{post.category}</p>
