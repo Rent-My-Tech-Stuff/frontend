@@ -16,6 +16,7 @@ import OwnerHome from './components/OwnerHome';
 import RenterHome from './components/RenterHome';
 import ItemPage from './components/ItemPage';
 
+
 import './App.css';
 
 const store = createStore(reducer, initialState, applyMiddleware(thunk, logger));
@@ -32,6 +33,7 @@ function App() {
         <Route path='/owner-home' component={OwnerHome}/>
         <Route path='/renter-home' component={RenterHome}/>
         <Route path='/item' component={ItemPage}/>
+        
       </div>
     </Provider>
   );
