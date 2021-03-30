@@ -4,6 +4,9 @@ import loginSchema from './LoginSchema'
 import * as yup from "yup";
 import styled from 'styled-components'
 
+import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
+import {login} from '../actions';
 
 
 const initialFormValues = {
@@ -20,9 +23,29 @@ const initialDisabled = true
 
 const Login = (props) => {
 
+const {message, login, user} = props;
+const history = useHistory();
+
 const [formValues, setFormValues] = useState(initialFormValues);
 const [formErrors, setFormErrors] = useState(initialFormErrors);
 const [disabled, setDisabled] = useState(initialDisabled);
+
+useEffect(() => {
+  if (message) {
+    setFormErrors({username:'', password:message}); // TEMPORARY ONLY!
+  }
+}, [message]);
+
+useEffect(() => {
+  if (user) {
+    if (user.role === 'owner') {
+      history.push('/owner-home');
+    } else if (user.role === 'renter') {
+      history.push('/renter-home');
+    }
+  }
+}, [user, history]);
+
 
 const inputChange = (name, value) => {
   yup
@@ -41,12 +64,7 @@ setFormValues({
 }
 
 const formSubmit = () => {
-  const loginSubmit = {
-    username: formValues.username.trim(),
-    password: formValues.password.trim(),
-  };
-
-
+  login(formValues);
 }
 
 useEffect(() => {
@@ -70,4 +88,8 @@ useEffect(() => {
   );
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {message: state.message, user: state.user};
+}
+
+export default connect(mapStateToProps, {login})(Login);
