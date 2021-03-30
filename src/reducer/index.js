@@ -20,6 +20,7 @@ import {
 } from '../actions';
 
 export const initialState = {
+  token: '',
   user: null,
   registeredUser: null,
   items: [],
@@ -41,6 +42,7 @@ export const reducer = (state, action) => {
       return {
         ...state,
         user: action.payload.user,
+        token: action.payload.token,
         message: ''
       }
     case LOGIN_FAILURE:
