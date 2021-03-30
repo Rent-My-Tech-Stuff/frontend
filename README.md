@@ -48,9 +48,7 @@ You can find the deployed project at [Rent My Tech Stuff ](https://rent-my-tech-
 <hr />
 <br />
 
-#### [Back end](Request URL: https://rent-my-tech-stuff.herokuapp.com/
-
-) built using: `heroku`
+#### [Back end](https://rent-my-tech-stuff.herokuapp.com) built using: `heroku`
 
 #### NodeJS
 
