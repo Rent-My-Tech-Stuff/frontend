@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-const StyledLoginForm = styled.div``
+const StyledLoginForm = styled.form``
 
 const LoginForm = (props) => {
     const {values, submit, change, disabled, errors } = props;
@@ -18,7 +18,7 @@ const LoginForm = (props) => {
     return(
         <StyledLoginForm className='loginFormContainer' onSubmit={onSubmit}>
         <h2>Login</h2>
-            <form>
+            
                 <label> Username
                 <input
                     type="text"
