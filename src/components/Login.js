@@ -67,7 +67,7 @@ const Login = (props) => {
         history.push("/renter-home");
       }
     }
-  }, [user, history]);
+  }, [user]);
 
   const inputChange = (name, value) => {
     yup

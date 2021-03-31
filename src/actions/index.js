@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useHistory } from "react-router";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 // log in and receive a token
@@ -25,17 +26,18 @@ export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
 export const logout = () => (dispatch) => {};
 
-// register a new acccount
+// register a new account
 export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
 
-export const register = (registerInfo) => (dispatch) => {
+export const register = (registerInfo, history) => (dispatch) => {
   dispatch({ type: REGISTER_START });
   axios
     .post("https://rent-my-tech-stuff.herokuapp.com/api/register", registerInfo)
     .then((res) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      history.push("/login");
     })
     .catch((err) => {
       dispatch({ type: REGISTER_FAILURE });

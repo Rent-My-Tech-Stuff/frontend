@@ -39,22 +39,11 @@ const initialFormErrors = {
 const initialDisabled = true;
 
 const Register = (props) => {
-  const { user, register } = props;
+  let { register } = props;
   const history = useHistory();
-
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
-
-  useEffect(() => {
-    if (user) {
-      if (user.role === "owner") {
-        history.push("/login");
-      } else if (user.role === "renter") {
-        history.push("/login");
-      }
-    }
-  }, [user, history]);
 
   const inputChange = (name, value) => {
     yup
@@ -86,7 +75,7 @@ const Register = (props) => {
       role: formValues.role.trim(),
     };
     console.log(formValues);
-    register(formValues);
+    register(formValues, history);
   };
 
   useEffect(() => {
@@ -107,7 +96,7 @@ const Register = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.user };
+  return { user: state.user, message: state.message };
 };
 
 export default connect(mapStateToProps, { register })(Register);
