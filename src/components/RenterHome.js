@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RenterHomeForm from "./RenterHomeForm";
 
+import {connect} from 'react-redux';
 import { renterSearch } from "../actions/index";
 import { useDispatch } from "react-redux";
 
@@ -8,39 +9,20 @@ const initialFormValues = {
   search: "",
   location: "",
 };
-function RenterHome() {
+function RenterHome(props) {
+  const {
+    items,
+    message,
+    renterSearch
+  } = props;
+
   const [formValues, setFormValues] = useState(initialFormValues);
-  const dispatch = useDispatch();
   //dummy data same as owner
-  const posts = [
-    {
-      name: "iphone",
-      category: "phone",
-      price_per_day: "25",
-      rental_period: "7 days",
-      description: "good phone",
-      user_id: 1,
-    },
-    {
-      name: "airpods",
-      category: "headphones",
-      price_per_day: "5",
-      rental_period: "7 days",
-      description: "listen up",
-      user_id: 2,
-    },
-    {
-      name: "macbook",
-      category: "pc",
-      price_per_day: "30",
-      rental_period: "5 days",
-      description: "type type type",
-      user_id: 3,
-    },
-  ];
+
 
   const formSubmit = () => {
-    dispatch(renterSearch(formValues)); // action
+    let location = '';
+    renterSearch('a','a'); // action
   };
 
   const inputChange = (name, value) => {
@@ -56,9 +38,10 @@ function RenterHome() {
         change={inputChange}
         submit={formSubmit}
       />
+      {message}
       <div className="itemResults">
-        {posts &&
-          posts.map((item, i) => (
+        {items &&
+          items.map((item, i) => (
             <div className="itemCard" key={i}>
               <h2>{item.name}</h2>
               <p>{item.price_per_day}</p>
@@ -70,4 +53,11 @@ function RenterHome() {
   );
 }
 
-export default RenterHome;
+const mapStateToProps = state => {
+  return {
+    items: state.items,
+    message: state.message,
+  }
+}
+
+export default connect(mapStateToProps, {renterSearch})(RenterHome);
