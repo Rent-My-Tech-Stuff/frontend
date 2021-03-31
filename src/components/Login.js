@@ -9,6 +9,17 @@ import {useHistory} from 'react-router-dom';
 import {login} from '../actions';
 
 
+//styling start
+const StyledBackgroundImg = styled.div`
+// background-image: linear-gradient(rgba(255,0,195,0.3), rgba(255,0,195,0.3)), url(${props => props.imageUrl});
+// height: 100%;
+// background-position: center 40px;
+// background-repeat: no-repeat;
+// background-size: cover;
+// flex-grow: 1;
+`
+//styling end
+
 const initialFormValues = {
   username : "",
   password : "",
@@ -73,7 +84,7 @@ useEffect(() => {
 
 
   return (
-    <div>
+    <StyledBackgroundImg>
 
       <LoginForm
         values={formValues}
@@ -84,7 +95,7 @@ useEffect(() => {
         
       />
 
-    </div>
+    </StyledBackgroundImg>
   );
 }
 
