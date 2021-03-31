@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import axios from 'axios';
 import OwnerHomeForm from "./OwnerHomeForm"
 import styled from 'styled-components'
-
+import {connect} from 'react-redux';
+import { ownerFetchData } from "../actions";
 
 
 const initialFormValues= {
@@ -16,13 +17,18 @@ const initialFormValues= {
 }
 
 
-
-function OwnerHome() {
+function OwnerHome(props) {
 
   const [formValues, setFormValues] = useState(initialFormValues)
   const [isAdding, setIsAdding] = useState(false)
   const [isEditing, setIsEditing] = useState (false)
 
+  const {message,items, user, ownerFetchData} = props;
+  useEffect(() => {
+    console.log('useEffect triggers');
+    ownerFetchData();
+  }, [user]);
+  
 
   const Add = () => {
     setIsAdding(!isAdding)
@@ -61,14 +67,6 @@ function OwnerHome() {
       user_id: 3
     },
   ]
- 
-   
-  
-    axios.post('')
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => console.log(err))
 
     
     const update = (e) => {
@@ -116,7 +114,7 @@ function OwnerHome() {
     return (
       <div className='owner-container'>
         <h1>Owner Home</h1>
-       
+          {message}
           
           <button className="addButton" onClick={Add}>
             Add New Item
@@ -127,7 +125,7 @@ function OwnerHome() {
           {/* {isAdding ? HideButton : null} */}
 
 
-          {posts.map((post, i) => (
+          {items.map((post, i) => (
           <div 
             className='post-container'
             key={i}>
@@ -156,5 +154,7 @@ function OwnerHome() {
     )
   }
 
-
-export default OwnerHome;
+const mapStateToProps = state => {
+  return {message: state.message, items: state.items, user: state.user};
+}
+export default connect(mapStateToProps, {ownerFetchData})(OwnerHome);

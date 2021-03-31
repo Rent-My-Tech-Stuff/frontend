@@ -41,7 +41,7 @@ export const reducer = (state, action) => {
       }
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('userId', action.payload.user.id);
+      localStorage.setItem('userId', action.payload.user.user_id);
       return {
         ...state,
         user: action.payload.user,
@@ -67,6 +67,7 @@ export const reducer = (state, action) => {
         message : ''
       }
     case OWNER_FETCH_DATA_FAILURE:
+      console.log(action.payload);
       return {
         ...state,
         message: 'Failed to get data from server',
@@ -76,7 +77,7 @@ export const reducer = (state, action) => {
         ...state,
         isEditing: true,
         isAdding: false,
-        thisItem: items.find(item => item.id === action.payload),
+        thisItem: state.items.find(item => item.id === action.payload),
         message: ''
       }
     case OWNER_CHANGE_ITEM_START:

@@ -41,14 +41,14 @@ export const OWNER_FETCH_DATA_SUCCESS = 'OWNER_FETCH_DATA_SUCCESS';
 export const OWNER_FETCH_DATA_FAILURE = 'OWNER_FETCH_DATA_FAILURE';
 
 export const ownerFetchData = () => dispatch => {
-  const ownerId = localStorage.getItem('ownerId');
+  const ownerId = localStorage.getItem('userId');
   dispatch({type:OWNER_FETCH_DATA_START});
   axiosWithAuth().get(`https://rent-my-tech-stuff.herokuapp.com/api/owners/${ownerId}`)
     .then(res => {
       dispatch({type:OWNER_FETCH_DATA_SUCCESS, payload:res.data});
     })
     .catch(err => {
-      dispatch({type:OWNER_FETCH_DATA_FAILURE});
+      dispatch({type:OWNER_FETCH_DATA_FAILURE, payload:err});
     });
 }
 
