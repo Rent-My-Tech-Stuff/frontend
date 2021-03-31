@@ -8,9 +8,7 @@ export default function OwnerHomeForm(props) {
   const {
     values,
     submit,
-    change,
-    disabled,
-    name
+    setFormValues,
   } = props
 
   const onSubmit = evt => {
@@ -20,9 +18,10 @@ export default function OwnerHomeForm(props) {
 
 
   const onChange = evt => {
-    const { name, value, type, checked } = evt.target
-    const valueToUse = type === 'checkbox' ? checked : value
-    change(name, valueToUse)
+    setFormValues({
+      ...values,
+      [evt.target.name]: evt.target.value
+    });
   }
 
 
@@ -35,6 +34,8 @@ export default function OwnerHomeForm(props) {
         <input
         onChange={onChange}
         type='text'
+        name='name'
+        value={values.name}
         />
       </label>
 
@@ -42,6 +43,8 @@ export default function OwnerHomeForm(props) {
         <input
         onChange={onChange}
         type='text'
+        name='category'
+        value={values.category}
         />
       </label>
 
@@ -49,6 +52,8 @@ export default function OwnerHomeForm(props) {
         <input
         onChange={onChange}
         type='text'
+        name='description'
+        value={values.description}
         />
       </label>
 
@@ -56,13 +61,16 @@ export default function OwnerHomeForm(props) {
         <input
         onChange={onChange}
         type='text'
-        />
+        name='price_per_day'
+        value={values.price_per_day}/>
       </label>
 
       <label>rental period
         <input
         onChange={onChange}
         type='text'
+        name='rental_period'
+        value={values.rental_period}
         />
       </label>
 

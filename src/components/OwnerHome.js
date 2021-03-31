@@ -4,7 +4,11 @@ import axios from 'axios';
 import OwnerHomeForm from "./OwnerHomeForm"
 import styled from 'styled-components'
 import {connect} from 'react-redux';
-import { ownerFetchData } from "../actions";
+import {
+  ownerFetchData,
+  ownerSelectItem,
+  ownerChangeItem,
+} from "../actions";
 
 
 const initialFormValues= {
@@ -20,23 +24,45 @@ const initialFormValues= {
 function OwnerHome(props) {
 
   const [formValues, setFormValues] = useState(initialFormValues)
-  const [isAdding, setIsAdding] = useState(false)
-  const [isEditing, setIsEditing] = useState (false)
+  // const [isAdding, setIsAdding] = useState(false)
+  // const [isEditing, setIsEditing] = useState (false)
 
-  const {message,items, user, ownerFetchData} = props;
-  useEffect(() => {
-    console.log('useEffect triggers');
-    ownerFetchData();
-  }, [user]);
+  const {
+    message,
+    items,
+    user,
+    thisItem,
+    isEditing,
+    isAdding,
+    needToFetch,
+    ownerFetchData,
+    ownerSelectItem,
+    ownerChangeItem,
+  } = props;
   
+  useEffect(() => {
+    ownerFetchData();
+  }, [user, ownerFetchData]);
+  
+  useEffect(() => {
+    if (thisItem) {
+      setFormValues(thisItem);
+    }
+  }, [thisItem]);
 
-  const Add = () => {
-    setIsAdding(!isAdding)
-  }
+  useEffect(() => {
+    if (needToFetch) {
+      ownerFetchData();
+    }
+  }, [needToFetch]);
 
-  const Edit = () => {
-    setIsEditing(!isEditing)
-  }
+  // const Add = () => {
+  //   setIsAdding(!isAdding)
+  // }
+
+  // const Edit = () => {
+  //   setIsEditing(!isEditing)
+  // }
   //edit currently has no functionality at all so it's only use 
   //at this point is just a cancel 'add new' button
 
@@ -69,16 +95,16 @@ function OwnerHome(props) {
   ]
 
     
-    const update = (e) => {
-      e.preventDefault();
-      const employee = {
-          name: this.state.name,
-          age: this.state.age,
-          salary: this.state.salary,
-      }
-      axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
-      .then(res => console.log(res.data));
-        }
+    // const update = (e) => {
+    //   e.preventDefault();
+    //   const employee = {
+    //       name: this.state.name,
+    //       age: this.state.age,
+    //       salary: this.state.salary,
+    //   }
+    //   axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
+    //   .then(res => console.log(res.data));
+    //     }
   
   
     const inputChange = (name, value) => {
@@ -103,6 +129,10 @@ function OwnerHome(props) {
     } 
     `
 
+    const submit = () => {
+      ownerChangeItem(thisItem.item_id, formValues);
+    }
+
     
 
     // useEffect(() => {
@@ -116,12 +146,12 @@ function OwnerHome(props) {
         <h1>Owner Home</h1>
           {message}
           
-          <button className="addButton" onClick={Add}>
+          <button className="addButton">
             Add New Item
           </button> 
           
             
-          {isAdding ? <OwnerHomeForm values={formValues}/> : null}
+          {true ? <OwnerHomeForm values={formValues} setFormValues={setFormValues} submit={submit}/> : null}
           {/* {isAdding ? HideButton : null} */}
 
 
@@ -138,7 +168,7 @@ function OwnerHome(props) {
 
         
         
-          <button onClick={Add}>Edit Item</button>
+          <button onClick={() => ownerSelectItem(post.item_id)}>Edit Item</button>
 
         
           <Link to="/">
@@ -155,6 +185,16 @@ function OwnerHome(props) {
   }
 
 const mapStateToProps = state => {
-  return {message: state.message, items: state.items, user: state.user};
+  return {
+    message: state.message,
+    items: state.items,
+    user: state.user,
+    thisItem: state.thisItem,
+    needToFetch: state.needToFetch,
+  };
 }
-export default connect(mapStateToProps, {ownerFetchData})(OwnerHome);
+export default connect(mapStateToProps, {
+  ownerFetchData,
+  ownerSelectItem,
+  ownerChangeItem,
+})(OwnerHome);

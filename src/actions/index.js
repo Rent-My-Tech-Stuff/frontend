@@ -63,10 +63,20 @@ export const ownerSelectItem = (id) => {
 // owner uses the edit form and submits to change the item
 export const OWNER_CHANGE_ITEM_START = 'OWNER_CHANGE_ITEM_START';
 export const OWNER_CHANGE_ITEM_SUCCESS = 'OWNER_CHANGE_ITEM_SUCCESS';
-export const OWNER_CHANGE_ITEM_FAILURE = 'OWNER_CHANGE_ITEM_FAILURE';
+export const OWNER_CHANGE_ITEM_FAILURE = 'OWNER_CHANGE_ITEM_FAILURE'
+
+
 
 export const ownerChangeItem = (id, item) => dispatch => {
 
+    dispatch({type:OWNER_CHANGE_ITEM_START});
+    axiosWithAuth().put(`https://rent-my-tech-stuff.herokuapp.com/api/owners/item/${id}`, item)
+      .then(res => {
+        dispatch({type:OWNER_CHANGE_ITEM_SUCCESS, payload:res.data});
+      })
+      .catch(err => {
+        dispatch({type:OWNER_CHANGE_ITEM_FAILURE, payload:err});
+      });
 }
 
 // owner selects a new item on their 
