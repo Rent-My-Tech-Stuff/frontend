@@ -83,6 +83,6 @@ export const RENTER_SEARCH_START = 'RENTER_SEARCH_START';
 export const RENTER_SEARCH_SUCCESS = 'RENTER_SEARCH_SUCCESS';
 export const RENTER_SEARCH_FAILURE = 'RENTER_SEARCH_FAILURE';
 
-export const renterSearch = (searchTerm, location) => dispatch => {
-
+export const renterSearch = (values) => dispatch => {
+ 
 }
