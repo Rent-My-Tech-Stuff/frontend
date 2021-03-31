@@ -29,7 +29,7 @@ flex-grow: 1;
 const Style = styled.div`
   display: flex;
   justify-content: space-evenly;
-margin: 12rem 0rem 10rem 5rem;
+  margin: 12rem 0rem 10rem 5rem;
 `
 
 

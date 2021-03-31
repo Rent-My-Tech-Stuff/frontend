@@ -13,12 +13,12 @@ const RenterHomeForm = (props) => {
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    submit(input);
+    submit();
   };
 
   const onChange = (evt) => {
-    const { value } = evt.target;
-    setInput(value);
+    const { value, name} = evt.target;
+    change(name, value);
   };
 
   return (
@@ -37,7 +37,7 @@ const RenterHomeForm = (props) => {
               <option value="city">city</option>
               <option value="state">state</option>
               <option value="anywhere">anywhere</option>
-
+              
             </select>
           </label>
         </StyledDropdown>
@@ -51,7 +51,7 @@ const RenterHomeForm = (props) => {
               type="text"
             />
           </label>
-          <button disabled={disabled}>Search</button>
+          <button type="submit">Search</button>
         </StyledSearch>
       </form>
     </StyledPage>
