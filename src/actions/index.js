@@ -1,4 +1,5 @@
 import axios from "axios";
+import {axiosWithAuth} from '../utils/axiosWithAuth';
 
 // log in and receive a token
 export const LOGIN_START = 'LOGIN_START';
@@ -40,7 +41,15 @@ export const OWNER_FETCH_DATA_SUCCESS = 'OWNER_FETCH_DATA_SUCCESS';
 export const OWNER_FETCH_DATA_FAILURE = 'OWNER_FETCH_DATA_FAILURE';
 
 export const ownerFetchData = () => dispatch => {
-  
+  const ownerId = localStorage.getItem('userId');
+  dispatch({type:OWNER_FETCH_DATA_START});
+  axiosWithAuth().get(`https://rent-my-tech-stuff.herokuapp.com/api/owners/${ownerId}`)
+    .then(res => {
+      dispatch({type:OWNER_FETCH_DATA_SUCCESS, payload:res.data});
+    })
+    .catch(err => {
+      dispatch({type:OWNER_FETCH_DATA_FAILURE, payload:err});
+    });
 }
 
 
@@ -54,10 +63,19 @@ export const ownerSelectItem = (id) => {
 // owner uses the edit form and submits to change the item
 export const OWNER_CHANGE_ITEM_START = 'OWNER_CHANGE_ITEM_START';
 export const OWNER_CHANGE_ITEM_SUCCESS = 'OWNER_CHANGE_ITEM_SUCCESS';
-export const OWNER_CHANGE_ITEM_FAILURE = 'OWNER_CHANGE_ITEM_FAILURE';
+export const OWNER_CHANGE_ITEM_FAILURE = 'OWNER_CHANGE_ITEM_FAILURE'
+
+
 
 export const ownerChangeItem = (id, item) => dispatch => {
-
+  dispatch({type:OWNER_CHANGE_ITEM_START});
+  axiosWithAuth().put(`https://rent-my-tech-stuff.herokuapp.com/api/owners/item/${id}`, item)
+    .then(res => {
+      dispatch({type:OWNER_CHANGE_ITEM_SUCCESS, payload:res.data});
+    })
+    .catch(err => {
+      dispatch({type:OWNER_CHANGE_ITEM_FAILURE, payload:err});
+    });
 }
 
 // owner selects a new item on their 
@@ -72,7 +90,14 @@ export const OWNER_ADD_ITEM_SUCCESS = 'OWNER_ADD_ITEM_SUCCESS';
 export const OWNER_ADD_ITEM_FAILURE = 'OWNER_ADD_ITEM_FAILURE';
 
 export const ownerAddItem = (item) => dispatch => {
-
+  dispatch({type:OWNER_ADD_ITEM_START});
+  axiosWithAuth().post(`https://rent-my-tech-stuff.herokuapp.com/api/owners/item/`, item)
+    .then(res => {
+      dispatch({type:OWNER_ADD_ITEM_SUCCESS, payload:res.data});
+    })
+    .catch(err => {
+      dispatch({type:OWNER_ADD_ITEM_FAILURE, payload:err});
+    });
 }
 
 export const OWNER_CANCEL = 'OWNER_CANCEL';
@@ -86,7 +111,14 @@ export const OWNER_DELETE_ITEM_SUCCESS = 'OWNER_DELETE_ITEM_SUCCESS';
 export const OWNER_DELETE_ITEM_FAILURE = 'OWNER_DELETE_ITEM_FAILURE';
 
 export const ownerDeleteItem = (id) => dispatch => {
-
+  dispatch({type:OWNER_DELETE_ITEM_START});
+  axiosWithAuth().delete(`https://rent-my-tech-stuff.herokuapp.com/api/owners/item/${id}`)
+    .then(res => {
+      dispatch({type:OWNER_DELETE_ITEM_SUCCESS, payload:res.data});
+    })
+    .catch(err => {
+      dispatch({type:OWNER_DELETE_ITEM_FAILURE, payload:err});
+    });
 }
 
 export const RENTER_SEARCH_START = 'RENTER_SEARCH_START';

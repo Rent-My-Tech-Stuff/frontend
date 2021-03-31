@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-import axios from 'axios';
 import OwnerHomeForm from "./OwnerHomeForm"
 import styled from 'styled-components'
-
+import {connect} from 'react-redux';
+import {
+  ownerFetchData,
+  ownerSelectItem,
+  ownerChangeItem,
+  ownerNewItem,
+  ownerAddItem,
+  ownerDeleteItem,
+  ownerCancel,
+} from "../actions";
 
 
 const initialFormValues= {
@@ -16,71 +24,94 @@ const initialFormValues= {
 }
 
 
-
-function OwnerHome() {
+function OwnerHome(props) {
 
   const [formValues, setFormValues] = useState(initialFormValues)
-  const [isAdding, setIsAdding] = useState(false)
-  const [isEditing, setIsEditing] = useState (false)
+  // const [isAdding, setIsAdding] = useState(false)
+  // const [isEditing, setIsEditing] = useState (false)
 
+  const {
+    message,
+    items,
+    user,
+    thisItem,
+    isEditing,
+    isAdding,
+    needToFetch,
+    ownerFetchData,
+    ownerSelectItem,
+    ownerChangeItem,
+    ownerNewItem,
+    ownerAddItem,
+    ownerDeleteItem,
+    ownerCancel,
+  } = props;
+  
+  useEffect(() => {
+    ownerFetchData();
+  }, [user, ownerFetchData]);
+  
+  useEffect(() => {
+    if (thisItem) {
+      setFormValues(thisItem);
+    }
+  }, [thisItem]);
 
-  const Add = () => {
-    setIsAdding(!isAdding)
-  }
+  useEffect(() => {
+    if (needToFetch) {
+      ownerFetchData();
+    }
+  }, [needToFetch]);
 
-  const Edit = () => {
-    setIsEditing(!isEditing)
-  }
+  // const Add = () => {
+  //   setIsAdding(!isAdding)
+  // }
+
+  // const Edit = () => {
+  //   setIsEditing(!isEditing)
+  // }
   //edit currently has no functionality at all so it's only use 
   //at this point is just a cancel 'add new' button
 
   //dummy data 
-  const posts = [
-    {    
-      name: 'iphone',
-      category: 'phone',
-      price_per_day: '25',
-      rental_period: '7 days',
-      description: 'good phone',
-      user_id: 1
-    },
-    {
-      name: 'airpods',
-      category: 'headphones',
-      price_per_day: '5',
-      rental_period: '7 days',
-      description: 'listen up',
-      user_id: 2
-    },
-    {
-      name: 'macbook', 
-      category: 'pc', 
-      price_per_day: '30', 
-      rental_period: '5 days', 
-      description: 'type type type', 
-      user_id: 3
-    },
-  ]
- 
-   
-  
-    axios.post('')
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => console.log(err))
+  // const posts = [
+  //   {    
+  //     name: 'iphone',
+  //     category: 'phone',
+  //     price_per_day: '25',
+  //     rental_period: '7 days',
+  //     description: 'good phone',
+  //     user_id: 1
+  //   },
+  //   {
+  //     name: 'airpods',
+  //     category: 'headphones',
+  //     price_per_day: '5',
+  //     rental_period: '7 days',
+  //     description: 'listen up',
+  //     user_id: 2
+  //   },
+  //   {
+  //     name: 'macbook', 
+  //     category: 'pc', 
+  //     price_per_day: '30', 
+  //     rental_period: '5 days', 
+  //     description: 'type type type', 
+  //     user_id: 3
+  //   },
+  // ]
 
     
-    const update = (e) => {
-      e.preventDefault();
-      const employee = {
-          name: this.state.name,
-          age: this.state.age,
-          salary: this.state.salary,
-      }
-      axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
-      .then(res => console.log(res.data));
-        }
+    // const update = (e) => {
+    //   e.preventDefault();
+    //   const employee = {
+    //       name: this.state.name,
+    //       age: this.state.age,
+    //       salary: this.state.salary,
+    //   }
+    //   axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
+    //   .then(res => console.log(res.data));
+    //     }
   
   
     const inputChange = (name, value) => {
@@ -105,6 +136,14 @@ function OwnerHome() {
     } 
     `
 
+    const submit = () => {
+      if (isEditing) {
+        ownerChangeItem(thisItem.item_id, formValues);
+      } else if (isAdding) {
+        ownerAddItem({...formValues, user_id:user.user_id});
+      }
+    }
+
     
 
     // useEffect(() => {
@@ -116,18 +155,19 @@ function OwnerHome() {
     return (
       <div className='owner-container'>
         <h1>Owner Home</h1>
-       
+          {message}
           
-          <button className="addButton" onClick={Add}>
+          <button className="addButton" onClick={() => ownerNewItem()}>
             Add New Item
           </button> 
           
-            
-          {isAdding ? <OwnerHomeForm values={formValues}/> : null}
+          <h2>{isAdding && 'Add Item'}{isEditing && 'Edit Item'}</h2>
+          {(isAdding || isEditing) ? <div><OwnerHomeForm values={formValues} setFormValues={setFormValues} submit={submit}/>
+          <button onClick={() => ownerCancel()}>Cancel</button></div> : null}
           {/* {isAdding ? HideButton : null} */}
 
 
-          {posts.map((post, i) => (
+          {items.map((post, i) => (
           <div 
             className='post-container'
             key={i}>
@@ -140,12 +180,10 @@ function OwnerHome() {
 
         
         
-          <button onClick={Add}>Edit Item</button>
+          <button onClick={() => ownerSelectItem(post.item_id)}>Edit Item</button>
 
         
-          <Link to="/">
-            <button>Delete Item</button>
-          </Link>
+          <button onClick={() => ownerDeleteItem(post.item_id)}>Delete Item</button>
         
        
         
@@ -156,5 +194,23 @@ function OwnerHome() {
     )
   }
 
-
-export default OwnerHome;
+const mapStateToProps = state => {
+  return {
+    message: state.message,
+    items: state.items,
+    user: state.user,
+    thisItem: state.thisItem,
+    needToFetch: state.needToFetch,
+    isEditing: state.isEditing,
+    isAdding: state.isAdding,
+  };
+}
+export default connect(mapStateToProps, {
+  ownerFetchData,
+  ownerSelectItem,
+  ownerChangeItem,
+  ownerNewItem,
+  ownerAddItem,
+  ownerDeleteItem,
+  ownerCancel,
+})(OwnerHome);
