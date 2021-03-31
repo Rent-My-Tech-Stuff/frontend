@@ -34,6 +34,16 @@ export const register = (registerInfo) => dispatch => {
 
 }
 
+// owner fetches their list of items
+export const OWNER_FETCH_DATA_START = 'OWNER_FETCH_DATA_START';
+export const OWNER_FETCH_DATA_SUCCESS = 'OWNER_FETCH_DATA_SUCCESS';
+export const OWNER_FETCH_DATA_FAILURE = 'OWNER_FETCH_DATA_FAILURE';
+
+export const ownerFetchData = () => dispatch => {
+  
+}
+
+
 // owner selects one of their items for editing
 export const OWNER_SELECT_ITEM = 'OWNER_SELECT_ITEM';
 
