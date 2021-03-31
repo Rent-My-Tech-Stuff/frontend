@@ -75,7 +75,7 @@ export const reducer = (state, action) => {
         ...state,
         isEditing: true,
         isAdding: false,
-        thisItem: items.find(item => item.id === action.payload),
+        // thisItem: items.find(item => item.id === action.payload),
         message: ''
       }
     case OWNER_CHANGE_ITEM_START:
