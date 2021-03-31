@@ -1,4 +1,5 @@
 import axios from "axios";
+import {axiosWithAuth} from '../utils/axiosWithAuth';
 
 // log in and receive a token
 export const LOGIN_START = 'LOGIN_START';
@@ -40,7 +41,15 @@ export const OWNER_FETCH_DATA_SUCCESS = 'OWNER_FETCH_DATA_SUCCESS';
 export const OWNER_FETCH_DATA_FAILURE = 'OWNER_FETCH_DATA_FAILURE';
 
 export const ownerFetchData = () => dispatch => {
-  
+  const ownerId = localStorage.getItem('ownerId');
+  dispatch({type:OWNER_FETCH_DATA_START});
+  axiosWithAuth().get(`https://rent-my-tech-stuff.herokuapp.com/api/owners/${ownerId}`)
+    .then(res => {
+      dispatch({type:OWNER_FETCH_DATA_SUCCESS, payload:res.data});
+    })
+    .catch(err => {
+      dispatch({type:OWNER_FETCH_DATA_FAILURE});
+    });
 }
 
 
