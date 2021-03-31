@@ -108,7 +108,7 @@ export const reducer = (state, action) => {
         isEditing: false,
         isAdding: true,
         thisItem: null,
-        message: ''
+        message: '',
       }
     case OWNER_ADD_ITEM_START:
       return {
@@ -121,9 +121,11 @@ export const reducer = (state, action) => {
         isEditing: false,
         isAdding: false,
         thisItem: null,
-        message: ''
+        message: '',
+        needToFetch: true,
       }
     case OWNER_ADD_ITEM_FAILURE:
+      console.log(action.payload);
       return {
         ...state,
         message: 'Failed to add item'
@@ -144,7 +146,8 @@ export const reducer = (state, action) => {
     case OWNER_DELETE_ITEM_SUCCESS:
       return {
         ...state,
-        message: ''
+        message: '',
+        needToFetch: true,
       }
     case OWNER_DELETE_ITEM_FAILURE:
       return {

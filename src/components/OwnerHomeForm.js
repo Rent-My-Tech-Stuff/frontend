@@ -74,7 +74,7 @@ export default function OwnerHomeForm(props) {
         />
       </label>
 
-      <button>add</button>
+      <button>Submit</button>
 
     </form>
   )
