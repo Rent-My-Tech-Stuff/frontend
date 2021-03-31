@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import RenterHomeForm from "./RenterHomeForm";
 
 import {connect} from 'react-redux';
@@ -16,13 +17,21 @@ function RenterHome(props) {
     renterSearch
   } = props;
 
+
+function RenterHome() {
+  const history = useHistory();
   const [formValues, setFormValues] = useState(initialFormValues);
   //dummy data same as owner
-
 
   const formSubmit = () => {
     let location = '';
     renterSearch('a','a'); // action
+  };
+
+  const handleDisplayClick = (e) => {
+    e.preventDefault();
+    history.push("/item");
+    console.log('clicked')
   };
 
   const inputChange = (name, value) => {
@@ -38,14 +47,16 @@ function RenterHome(props) {
         change={inputChange}
         submit={formSubmit}
       />
-      {message}
-      <div className="itemResults">
+      <div className="itemResults" >
         {items &&
           items.map((item, i) => (
-            <div className="itemCard" key={i}>
+            <div className="itemCard" key={i} 
+            to="/item"
+            onClick={(e) => handleDisplayClick(e, item)}>
               <h2>{item.name}</h2>
-              <p>{item.price_per_day}</p>
-              <p>{item.description}</p>
+              <p>${item.price_per_day} per day</p>
+              <p>located in {item.city}</p>
+              <p>{item.description}</p> 
             </div>
           ))}
       </div>
