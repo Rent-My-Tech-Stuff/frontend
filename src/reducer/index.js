@@ -20,6 +20,9 @@ import {
   OWNER_DELETE_ITEM_START,
   OWNER_DELETE_ITEM_SUCCESS,
   OWNER_DELETE_ITEM_FAILURE,
+  RENTER_SEARCH_START,
+  RENTER_SEARCH_SUCCESS,
+  RENTER_SEARCH_FAILURE,
 } from '../actions';
 
 export const initialState = {
@@ -154,6 +157,22 @@ export const reducer = (state, action) => {
         ...state,
         message: 'Failed to delete'
       }
+    case RENTER_SEARCH_START:
+      return {
+        ...state,
+        message: 'Searching',
+      }
+    case RENTER_SEARCH_SUCCESS:
+      return {
+        ...state,
+        items: action.payload,
+        message: '',
+      }
+    case RENTER_SEARCH_FAILURE:
+      return {
+        ...state,
+        message: 'Failed to search'
+      }  
     default:
       return state;
   }
