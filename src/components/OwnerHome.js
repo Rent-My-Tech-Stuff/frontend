@@ -10,6 +10,7 @@ import {
   ownerNewItem,
   ownerAddItem,
   ownerDeleteItem,
+  ownerCancel,
 } from "../actions";
 
 
@@ -43,6 +44,7 @@ function OwnerHome(props) {
     ownerNewItem,
     ownerAddItem,
     ownerDeleteItem,
+    ownerCancel,
   } = props;
   
   useEffect(() => {
@@ -160,7 +162,8 @@ function OwnerHome(props) {
           </button> 
           
           <h2>{isAdding && 'Add Item'}{isEditing && 'Edit Item'}</h2>
-          {(isAdding || isEditing) ? <OwnerHomeForm values={formValues} setFormValues={setFormValues} submit={submit}/> : null}
+          {(isAdding || isEditing) ? <div><OwnerHomeForm values={formValues} setFormValues={setFormValues} submit={submit}/>
+          <button onClick={() => ownerCancel()}>Cancel</button></div> : null}
           {/* {isAdding ? HideButton : null} */}
 
 
@@ -209,4 +212,5 @@ export default connect(mapStateToProps, {
   ownerNewItem,
   ownerAddItem,
   ownerDeleteItem,
+  ownerCancel,
 })(OwnerHome);
