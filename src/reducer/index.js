@@ -2,6 +2,7 @@ import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT,
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -57,6 +58,9 @@ export const reducer = (state, action) => {
         ...state,
         message: "Username or password incorrect",
       };
+    case LOGOUT:
+      localStorage.clear();
+      return initialState;
     case REGISTER_START:
       return {
         ...state,
