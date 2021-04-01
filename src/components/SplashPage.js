@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
-
+//styling start
 const StyledDiv = styled.div`
 height: 100vh;
 width: 100vw;
@@ -29,7 +29,7 @@ flex-grow: 1;
 const Style = styled.div`
   display: flex;
   justify-content: space-evenly;
-margin: 12rem 0rem 10rem 5rem;
+  margin: 12rem 0rem 10rem 5rem;
 `
 
 
@@ -44,6 +44,8 @@ const StyledLink = styled(Link)`
   border-radius: 18%;
   padding: 3%;
 `
+
+//styling end
 
 
 function SplashPage() {

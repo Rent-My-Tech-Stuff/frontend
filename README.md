@@ -4,6 +4,10 @@
 
 You can find the deployed project at [Rent My Tech Stuff ](https://rent-my-tech-stuff.vercel.app/).
 
+# Product Vision Document
+
+[link to PVD](https://docs.google.com/document/d/1GenCLHKL8uin8f87p8cNLFjG7pMf3KSwdbHlqeVaHXo/edit)
+
 ## Contributors
 
 <table>
@@ -44,9 +48,7 @@ You can find the deployed project at [Rent My Tech Stuff ](https://rent-my-tech-
 <hr />
 <br />
 
-#### [Back end](Request URL: https://rent-my-tech-stuff.herokuapp.com/
-
-) built using: `heroku`
+#### [Back end](https://rent-my-tech-stuff.herokuapp.com) built using: `heroku`
 
 #### NodeJS
 
