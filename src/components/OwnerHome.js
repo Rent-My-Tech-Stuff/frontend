@@ -48,7 +48,9 @@ function OwnerHome(props) {
   } = props;
   
   useEffect(() => {
-    ownerFetchData();
+    if (user) {
+      ownerFetchData();
+    }
   }, [user, ownerFetchData]);
   
   useEffect(() => {

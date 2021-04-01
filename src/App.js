@@ -7,6 +7,7 @@ import logger from 'redux-logger';
 
 import {persistStore, persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import {initialState, reducer} from './reducer';
 
@@ -30,10 +31,12 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = createStore(persistedReducer, initialState, applyMiddleware(thunk, logger));
+const persistor = persistStore(store);
 
 function App() {
   return (
     <Provider store={store}>
+      <PersistGate persistor={persistor}>
       <div className="App">
         <NavBar/>
         <Route exact path='/' component={SplashPage}/>
@@ -45,6 +48,7 @@ function App() {
         <Route path='/item' component={ItemPage}/>
         
       </div>
+      </PersistGate>
     </Provider>
   );
 }

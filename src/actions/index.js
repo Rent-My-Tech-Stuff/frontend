@@ -20,11 +20,11 @@ export const login = (credentials) => (dispatch) => {
 };
 
 // log out and delete token
-export const LOGOUT_START = "LOGOUT_START";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
+export const LOGOUT = "LOGOUT";
 
-export const logout = () => (dispatch) => {};
+export const logout = () => {
+  return {type: LOGOUT};
+};
 
 // register a new account
 export const REGISTER_START = "REGISTER_START";
