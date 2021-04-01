@@ -39,7 +39,7 @@ const LoginForm = (props) => {
                 </label>
                 <span className="errors">{errors.password}</span>
                 <button disabled={disabled}>Log In</button>
-            </form>
+            
 
         </StyledLoginForm>
         
