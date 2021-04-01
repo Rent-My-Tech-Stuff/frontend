@@ -5,6 +5,9 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
+import {persistStore, persistReducer} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
 import {initialState, reducer} from './reducer';
 
 import NavBar from './components/NavBar';
@@ -19,7 +22,14 @@ import ItemPage from './components/ItemPage';
 
 import './App.css';
 
-const store = createStore(reducer, initialState, applyMiddleware(thunk, logger));
+const persistConfig = {
+  key: "root",
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+const store = createStore(persistedReducer, initialState, applyMiddleware(thunk, logger));
 
 function App() {
   return (
