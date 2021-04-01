@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import RenterHomeForm from "./RenterHomeForm";
-import { renterSearch } from "../actions/index";
+
+import {connect} from 'react-redux';
+import { renterSearch, renterSelect } from "../actions/index";
 import { useDispatch } from "react-redux";
 
 const initialFormValues = {
@@ -9,49 +11,36 @@ const initialFormValues = {
   location: "",
 };
 
-function RenterHome() {
+
+const RenterHome = (props) => {
+  const {
+    items,
+    message,
+    user,
+    renterSearch,
+    renterSelect,
+  } = props;
+
   const history = useHistory();
   const [formValues, setFormValues] = useState(initialFormValues);
-  const dispatch = useDispatch();
   //dummy data same as owner
-  const posts = [
-    {
-      name: "iphone",
-      category: "phone",
-      price_per_day: "25",
-      rental_period: "7 days",
-      description: "good phone",
-      city: "Seattle",
-      user_id: 1,
-    },
-    {
-      name: "airpods",
-      category: "headphones",
-      price_per_day: "5",
-      rental_period: "7 days",
-      description: "listen up",
-      city: "Seattle",
-      user_id: 2,
-    },
-    {
-      name: "macbook",
-      category: "pc",
-      price_per_day: "30",
-      rental_period: "5 days",
-      description: "type type type",
-      city: "Seattle",
-      user_id: 3,
-    },
-  ];
 
   const formSubmit = () => {
-    dispatch(renterSearch(formValues)); // action
+    let location = '';
+    if (formValues.location === 'zipcode') {
+      location = user.zipcode;
+    } else if (formValues.location === 'city') {
+      location = user.city;
+    } else if (formValues.location === 'state') {
+      location = user.state;
+    }
+    renterSearch(formValues.search, location);
   };
 
-  const handleDisplayClick = (e) => {
+  const handleDisplayClick = (e, item) => {
     e.preventDefault();
+    renterSelect(item);
     history.push("/item");
-    console.log('clicked')
   };
 
   const inputChange = (name, value) => {
@@ -67,11 +56,11 @@ function RenterHome() {
         change={inputChange}
         submit={formSubmit}
       />
+      {message}
       <div className="itemResults" >
-        {posts &&
-          posts.map((item, i) => (
+        {items &&
+          items.map((item, i) => (
             <div className="itemCard" key={i} 
-            to="/item"
             onClick={(e) => handleDisplayClick(e, item)}>
               <h2>{item.name}</h2>
               <p>${item.price_per_day} per day</p>
@@ -84,4 +73,12 @@ function RenterHome() {
   );
 }
 
-export default RenterHome;
+const mapStateToProps = state => {
+  return {
+    items: state.items,
+    message: state.message,
+    user: state.user,
+  }
+};
+
+export default connect(mapStateToProps, {renterSearch, renterSelect})(RenterHome);
