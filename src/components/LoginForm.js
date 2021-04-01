@@ -31,7 +31,7 @@ flex-direction: column;
   }
 `
 const ButtonStyled = styled.button`
-width: 20%;
+width: 30%;
 margin: 3rem 1rem 3rem 1rem;
 padding: 0.8rem;
 align-self: center;
