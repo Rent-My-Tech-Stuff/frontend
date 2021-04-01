@@ -130,7 +130,7 @@ const RegistrationForm = (props) => {
       </label>
       <span className="errors">{errors.role}</span>
 
-      <button disabled={disabled}>Sign Up</button>
+      <button>Sign Up</button>
     </StyledRegistrationForm>
   );
 };
