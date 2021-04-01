@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import {connect} from 'react-redux';
 
 const posts = [
   {    
@@ -31,14 +32,18 @@ const posts = [
   },
 ]
 
-function ItemPage() {
+function ItemPage(props) {
 
   
   // changed address within App so that it takes specific item id
   let { id } = useParams();
 
+  // let {thisItem} = props;
+  // console.log(thisItem);
+
   //may or may not need this function but i needed it to try to use dummy data
-  const product = posts.find(p => p.id === parseInt(id))
+  // const product = posts.find(p => p.id === parseInt(id))
+  const product = props.thisItem;
 
   return product ? (
     <div>
@@ -50,12 +55,18 @@ function ItemPage() {
       
       {/* not sure how the data coming in is organized so labeled this username/email hoping theyre in same index as the post information */}
 
-      {/* <p>{product.username}</p>
-      <p>{product.email}</p> */}
+      <p>{product.firstname} {product.lastname}</p>
+      <p>{product.email}</p>
     </div>
   ) : (
     <div>error</div>
   );
 }
 
-export default ItemPage;
+const mapStateToProps = (state) => {
+  return {
+    thisItem: state.thisItem
+  };
+}
+
+export default connect(mapStateToProps, {})(ItemPage);
