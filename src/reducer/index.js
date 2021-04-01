@@ -34,7 +34,7 @@ export const initialState = {
   isAdding: false,
   isEditing: false,
   needToFetch: false,
-  message: '',
+  message: "",
 };
 
 export const reducer = (state, action) => {
@@ -42,117 +42,126 @@ export const reducer = (state, action) => {
     case LOGIN_START:
       return {
         ...state,
-        message: 'Logging in...'
-      }
+        message: "Logging in...",
+      };
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('userId', action.payload.user.user_id);
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("userId", action.payload.user.user_id);
       return {
         ...state,
         user: action.payload.user,
-        message: ''
-      }
+        message: "",
+      };
     case LOGIN_FAILURE:
       return {
         ...state,
-        message: 'Username or password incorrect'
-      }
+        message: "Username or password incorrect",
+      };
     case REGISTER_START:
+      return {
+        ...state,
+        message: "Registering...",
+      };
     case REGISTER_SUCCESS:
+      return {
+        ...state,
+        registeredUser: action.payload,
+        message: "",
+      };
     case REGISTER_FAILURE:
     case OWNER_FETCH_DATA_START:
       return {
         ...state,
-        message: 'Fetching data from server...',
-      }
+        message: "Fetching data from server...",
+      };
     case OWNER_FETCH_DATA_SUCCESS:
       return {
         ...state,
         items: action.payload,
-        message : '',
+        message: "",
         needToFetch: false,
-      }
+      };
     case OWNER_FETCH_DATA_FAILURE:
       console.log(action.payload);
       return {
         ...state,
-        message: 'Failed to get data from server',
+        message: "Failed to get data from server",
         needToFetch: false,
-      }
+      };
     case OWNER_SELECT_ITEM:
       return {
         ...state,
         isEditing: true,
         isAdding: false,
-        thisItem: state.items.find(item => item.item_id === action.payload),
-        message: ''
-      }
+        thisItem: state.items.find((item) => item.item_id === action.payload),
+        message: "",
+      };
     case OWNER_CHANGE_ITEM_START:
       return {
         ...state,
-        message: 'Updating...'
-      }
+        message: "Updating...",
+      };
     case OWNER_CHANGE_ITEM_SUCCESS:
       return {
         ...state,
         isEditing: false,
         isAdding: false,
         thisItem: null,
-        message: '',
+        message: "",
         needToFetch: true,
-      }
+      };
     case OWNER_CHANGE_ITEM_FAILURE:
       return {
         ...state,
-        message: 'Update failed'
-      }
+        message: "Update failed",
+      };
     case OWNER_NEW_ITEM:
       return {
         ...state,
         isEditing: false,
         isAdding: true,
         thisItem: null,
-        message: '',
-      }
+        message: "",
+      };
     case OWNER_ADD_ITEM_START:
       return {
         ...state,
-        message: 'Adding...'
-      }
+        message: "Adding...",
+      };
     case OWNER_ADD_ITEM_SUCCESS:
       return {
         ...state,
         isEditing: false,
         isAdding: false,
         thisItem: null,
-        message: '',
+        message: "",
         needToFetch: true,
-      }
+      };
     case OWNER_ADD_ITEM_FAILURE:
       console.log(action.payload);
       return {
         ...state,
-        message: 'Failed to add item'
-      }
+        message: "Failed to add item",
+      };
     case OWNER_CANCEL:
       return {
         ...state,
         isEditing: false,
         isAdding: false,
         thisItem: null,
-        message: ''
-      }
+        message: "",
+      };
     case OWNER_DELETE_ITEM_START:
       return {
         ...state,
-        message: 'Deleting...'
-      }
+        message: "Deleting...",
+      };
     case OWNER_DELETE_ITEM_SUCCESS:
       return {
         ...state,
-        message: '',
+        message: "",
         needToFetch: true,
-      }
+      };
     case OWNER_DELETE_ITEM_FAILURE:
       return {
         ...state,
@@ -183,4 +192,4 @@ export const reducer = (state, action) => {
     default:
       return state;
   }
-}
+};
