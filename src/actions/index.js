@@ -126,9 +126,9 @@ export const RENTER_SEARCH_SUCCESS = 'RENTER_SEARCH_SUCCESS';
 export const RENTER_SEARCH_FAILURE = 'RENTER_SEARCH_FAILURE';
 
 export const renterSearch = (searchTerm, location) => dispatch => {
-  const query = searchTerm ?
+  const query = (searchTerm && location) ?
     `https://rent-my-tech-stuff.herokuapp.com/api/renters/?filter=${searchTerm}&&location=${location}`:
-    `https://rent-my-tech-stuff.herokuapp.com/api/renters/?location=${location}`;
+    `https://rent-my-tech-stuff.herokuapp.com/api/`;
   dispatch({ type: RENTER_SEARCH_START });
   axiosWithAuth().get(query)
     .then(res => {
@@ -137,4 +137,10 @@ export const renterSearch = (searchTerm, location) => dispatch => {
     .catch(err => {
       dispatch({ type: RENTER_SEARCH_FAILURE, payload: err })
     })
+}
+
+export const RENTER_SELECT = 'RENTER_SELECT';
+
+export const renterSelect = (item) => {
+  return {type:RENTER_SELECT, payload:item};
 }

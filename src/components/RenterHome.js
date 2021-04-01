@@ -3,35 +3,44 @@ import { useHistory } from "react-router-dom";
 import RenterHomeForm from "./RenterHomeForm";
 
 import {connect} from 'react-redux';
-import { renterSearch } from "../actions/index";
+import { renterSearch, renterSelect } from "../actions/index";
 import { useDispatch } from "react-redux";
 
 const initialFormValues = {
   search: "",
   location: "",
 };
-function RenterHome(props) {
+
+
+const RenterHome = (props) => {
   const {
     items,
     message,
-    renterSearch
+    user,
+    renterSearch,
+    renterSelect,
   } = props;
 
-
-function RenterHome() {
   const history = useHistory();
   const [formValues, setFormValues] = useState(initialFormValues);
   //dummy data same as owner
 
   const formSubmit = () => {
     let location = '';
-    renterSearch('a','a'); // action
+    if (formValues.location === 'zipcode') {
+      location = user.zipcode;
+    } else if (formValues.location === 'city') {
+      location = user.city;
+    } else if (formValues.location === 'state') {
+      location = user.state;
+    }
+    renterSearch(formValues.search, location);
   };
 
-  const handleDisplayClick = (e) => {
+  const handleDisplayClick = (e, item) => {
     e.preventDefault();
+    renterSelect(item);
     history.push("/item");
-    console.log('clicked')
   };
 
   const inputChange = (name, value) => {
@@ -47,11 +56,11 @@ function RenterHome() {
         change={inputChange}
         submit={formSubmit}
       />
+      {message}
       <div className="itemResults" >
         {items &&
           items.map((item, i) => (
             <div className="itemCard" key={i} 
-            to="/item"
             onClick={(e) => handleDisplayClick(e, item)}>
               <h2>{item.name}</h2>
               <p>${item.price_per_day} per day</p>
@@ -68,7 +77,8 @@ const mapStateToProps = state => {
   return {
     items: state.items,
     message: state.message,
+    user: state.user,
   }
-}
+};
 
-export default connect(mapStateToProps, {renterSearch})(RenterHome);
+export default connect(mapStateToProps, {renterSearch, renterSelect})(RenterHome);

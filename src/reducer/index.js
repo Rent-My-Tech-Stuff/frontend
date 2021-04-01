@@ -23,6 +23,7 @@ import {
   RENTER_SEARCH_START,
   RENTER_SEARCH_SUCCESS,
   RENTER_SEARCH_FAILURE,
+  RENTER_SELECT,
 } from '../actions';
 
 export const initialState = {
@@ -172,7 +173,13 @@ export const reducer = (state, action) => {
       return {
         ...state,
         message: 'Failed to search'
-      }  
+      }
+    case RENTER_SELECT:
+      return {
+        ...state,
+        message: '',
+        thisItem: action.payload
+      }
     default:
       return state;
   }

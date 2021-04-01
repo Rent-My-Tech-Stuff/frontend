@@ -8,7 +8,7 @@ const StyledDropdown = styled.div``;
 
 const RenterHomeForm = (props) => {
   const initialValue = "";
-  const { values, change, submit, disabled } = props;
+  const { values, change, submit } = props;
   const [input, setInput] = useState(initialValue);
 
   const onSubmit = (evt) => {
@@ -32,11 +32,11 @@ const RenterHomeForm = (props) => {
               name="location"
               onChange={onChange}
             >
-              <option value="">-------</option>
+              {/* <option value="">-------</option> */}
               <option value="zipcode">zip code</option>
               <option value="city">city</option>
               <option value="state">state</option>
-              <option value="anywhere">anywhere</option>
+              {/* <option value="anywhere">anywhere</option> */}
               
             </select>
           </label>
