@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import RenterHomeForm from "./RenterHomeForm";
 
 import { renterSearch } from "../actions/index";
+import { useDispatch } from "react-redux";
 
 const initialFormValues = {
   search: "",
@@ -9,7 +10,7 @@ const initialFormValues = {
 };
 function RenterHome() {
   const [formValues, setFormValues] = useState(initialFormValues);
-
+  const dispatch = useDispatch();
   //dummy data same as owner
   const posts = [
     {
@@ -38,8 +39,8 @@ function RenterHome() {
     },
   ];
 
-  const formSubmit = (value) => {
-    renterSearch(value);
+  const formSubmit = () => {
+    dispatch(renterSearch(formValues)); // action
   };
 
   const inputChange = (name, value) => {

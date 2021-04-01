@@ -29,6 +29,7 @@ export const initialState = {
   thisItem: null,
   isAdding: false,
   isEditing: false,
+  needToFetch: false,
   message: '',
 };
 
@@ -41,6 +42,7 @@ export const reducer = (state, action) => {
       }
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('userId', action.payload.user.user_id);
       return {
         ...state,
         user: action.payload.user,
@@ -63,19 +65,22 @@ export const reducer = (state, action) => {
       return {
         ...state,
         items: action.payload,
-        message : ''
+        message : '',
+        needToFetch: false,
       }
     case OWNER_FETCH_DATA_FAILURE:
+      console.log(action.payload);
       return {
         ...state,
         message: 'Failed to get data from server',
+        needToFetch: false,
       }
     case OWNER_SELECT_ITEM:
       return {
         ...state,
         isEditing: true,
         isAdding: false,
-        // thisItem: items.find(item => item.id === action.payload),
+        thisItem: state.items.find(item => item.item_id === action.payload),
         message: ''
       }
     case OWNER_CHANGE_ITEM_START:
@@ -90,6 +95,7 @@ export const reducer = (state, action) => {
         isAdding: false,
         thisItem: null,
         message: '',
+        needToFetch: true,
       }
     case OWNER_CHANGE_ITEM_FAILURE:
       return {
@@ -102,7 +108,7 @@ export const reducer = (state, action) => {
         isEditing: false,
         isAdding: true,
         thisItem: null,
-        message: ''
+        message: '',
       }
     case OWNER_ADD_ITEM_START:
       return {
@@ -115,9 +121,11 @@ export const reducer = (state, action) => {
         isEditing: false,
         isAdding: false,
         thisItem: null,
-        message: ''
+        message: '',
+        needToFetch: true,
       }
     case OWNER_ADD_ITEM_FAILURE:
+      console.log(action.payload);
       return {
         ...state,
         message: 'Failed to add item'
@@ -138,7 +146,8 @@ export const reducer = (state, action) => {
     case OWNER_DELETE_ITEM_SUCCESS:
       return {
         ...state,
-        message: ''
+        message: '',
+        needToFetch: true,
       }
     case OWNER_DELETE_ITEM_FAILURE:
       return {
