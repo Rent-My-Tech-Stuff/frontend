@@ -32,7 +32,7 @@ function App() {
         <Route path='/profile' component={Profile}/>
         <Route path='/owner-home' component={OwnerHome}/>
         <Route path='/renter-home' component={RenterHome}/>
-        <Route path='/item' component={ItemPage}/>
+        <Route path='/item/:id' component={ItemPage}/>
         
       </div>
     </Provider>
