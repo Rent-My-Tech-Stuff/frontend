@@ -8,6 +8,30 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { register } from "../actions";
 
+//styling start
+const StyledDiv = styled.div`
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  display: flex;
+  flex-grow: 1;
+`;
+const StyledBackgroundImg = styled.div`
+  background-image: linear-gradient(
+      rgba(255, 0, 195, 0.3),
+      rgba(255, 0, 195, 0.3)
+    ),
+    url(${(props) => props.imageUrl});
+  position: relative;
+  height: 100%;
+  background-position: center 40px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-grow: 1;
+`;
+//styling end
+
 const initialFormValues = {
   username: "",
   password: "",
@@ -83,15 +107,17 @@ const Register = (props) => {
   }, [formValues]);
 
   return (
-    <div>
-      <RegistrationForm
-        values={formValues}
-        change={inputChange}
-        submit={formSubmit}
-        disabled={disabled}
-        errors={formErrors}
-      />
-    </div>
+    <StyledDiv>
+      <StyledBackgroundImg imageUrl="https://i.pinimg.com/736x/7f/99/cb/7f99cbd17100174bb26d9433e7ed1388.jpg">
+        <RegistrationForm
+          values={formValues}
+          change={inputChange}
+          submit={formSubmit}
+          disabled={disabled}
+          errors={formErrors}
+        />
+      </StyledBackgroundImg>
+    </StyledDiv>
   );
 };
 

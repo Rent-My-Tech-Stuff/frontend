@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"
-import OwnerHomeForm from "./OwnerHomeForm"
-import styled from 'styled-components'
-import {connect} from 'react-redux';
+import { Link } from "react-router-dom";
+import OwnerHomeForm from "./OwnerHomeForm";
+import styled from "styled-components";
+import { connect } from "react-redux";
 import {
   ownerFetchData,
   ownerSelectItem,
@@ -13,20 +13,20 @@ import {
   ownerCancel,
 } from "../actions";
 
+//styling start
+const StyledPost = styled.div``;
+//styling end
 
-const initialFormValues= {
+const initialFormValues = {
   name: "",
   category: "",
   price_per_day: "",
   rental_period: "",
   description: "",
-  
-}
-
+};
 
 function OwnerHome(props) {
-
-  const [formValues, setFormValues] = useState(initialFormValues)
+  const [formValues, setFormValues] = useState(initialFormValues);
   // const [isAdding, setIsAdding] = useState(false)
   // const [isEditing, setIsEditing] = useState (false)
 
@@ -46,13 +46,13 @@ function OwnerHome(props) {
     ownerDeleteItem,
     ownerCancel,
   } = props;
-  
+
   useEffect(() => {
     if (user) {
       ownerFetchData();
     }
   }, [user, ownerFetchData]);
-  
+
   useEffect(() => {
     if (thisItem) {
       setFormValues(thisItem);
@@ -72,12 +72,12 @@ function OwnerHome(props) {
   // const Edit = () => {
   //   setIsEditing(!isEditing)
   // }
-  //edit currently has no functionality at all so it's only use 
+  //edit currently has no functionality at all so it's only use
   //at this point is just a cancel 'add new' button
 
-  //dummy data 
+  //dummy data
   // const posts = [
-  //   {    
+  //   {
   //     name: 'iphone',
   //     category: 'phone',
   //     price_per_day: '25',
@@ -94,109 +94,108 @@ function OwnerHome(props) {
   //     user_id: 2
   //   },
   //   {
-  //     name: 'macbook', 
-  //     category: 'pc', 
-  //     price_per_day: '30', 
-  //     rental_period: '5 days', 
-  //     description: 'type type type', 
+  //     name: 'macbook',
+  //     category: 'pc',
+  //     price_per_day: '30',
+  //     rental_period: '5 days',
+  //     description: 'type type type',
   //     user_id: 3
   //   },
   // ]
 
-    
-    // const update = (e) => {
-    //   e.preventDefault();
-    //   const employee = {
-    //       name: this.state.name,
-    //       age: this.state.age,
-    //       salary: this.state.salary,
-    //   }
-    //   axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
-    //   .then(res => console.log(res.data));
-    //     }
-  
-  
-    const inputChange = (name, value) => {
-      console.log(formValues)
-      // yup.reach(name)
-      //   .validate(value)
-      //   .then(() => {
-      //     setFormErrors({...formErrors, [name]: ''})
-      //   })
-      //   .catch(err => {
-      //     setFormErrors({...formErrors, [name]: err.errors[0]})
-      //   })
-      setFormValues({
-        ...formValues,
-        [name]: value 
-      })
-    }
+  // const update = (e) => {
+  //   e.preventDefault();
+  //   const employee = {
+  //       name: this.state.name,
+  //       age: this.state.age,
+  //       salary: this.state.salary,
+  //   }
+  //   axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
+  //   .then(res => console.log(res.data));
+  //     }
 
-    const HideButton = styled.div`
-    .addButton{
+  const inputChange = (name, value) => {
+    console.log(formValues);
+    // yup.reach(name)
+    //   .validate(value)
+    //   .then(() => {
+    //     setFormErrors({...formErrors, [name]: ''})
+    //   })
+    //   .catch(err => {
+    //     setFormErrors({...formErrors, [name]: err.errors[0]})
+    //   })
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
+
+  const HideButton = styled.div`
+    .addButton {
       display: none;
-    } 
-    `
-
-    const submit = () => {
-      if (isEditing) {
-        ownerChangeItem(thisItem.item_id, formValues);
-      } else if (isAdding) {
-        ownerAddItem({...formValues, user_id:user.user_id});
-      }
     }
+  `;
 
-    
+  const submit = () => {
+    if (isEditing) {
+      ownerChangeItem(thisItem.item_id, formValues);
+    } else if (isAdding) {
+      ownerAddItem({ ...formValues, user_id: user.user_id });
+    }
+  };
 
-    // useEffect(() => {
-    //   homeSchema.isValid(formValues).then(valid => 
-    //     setDisabled(!valid))
-    //   }, [formValues])
-  
-  
-    return (
-      <div className='owner-container'>
-        <h1>Owner Home</h1>
-          {message}
-          
-          <button className="addButton" onClick={() => ownerNewItem()}>
-            Add New Item
-          </button> 
-          
-          <h2>{isAdding && 'Add Item'}{isEditing && 'Edit Item'}</h2>
-          {(isAdding || isEditing) ? <div><OwnerHomeForm values={formValues} setFormValues={setFormValues} submit={submit}/>
-          <button onClick={() => ownerCancel()}>Cancel</button></div> : null}
-          {/* {isAdding ? HideButton : null} */}
+  // useEffect(() => {
+  //   homeSchema.isValid(formValues).then(valid =>
+  //     setDisabled(!valid))
+  //   }, [formValues])
 
+  return (
+    <div className="owner-container">
+      <h1>Owner Home</h1>
+      {message}
 
-          {items.map((post, i) => (
-          <div 
-            className='post-container'
-            key={i}>
-    
+      <button className="addButton" onClick={() => ownerNewItem()}>
+        Add New Item
+      </button>
+
+      <h2>
+        {isAdding && "Add Item"}
+        {isEditing && "Edit Item"}
+      </h2>
+      {isAdding || isEditing ? (
+        <div>
+          <OwnerHomeForm
+            values={formValues}
+            setFormValues={setFormValues}
+            submit={submit}
+          />
+          <button onClick={() => ownerCancel()}>Cancel</button>
+        </div>
+      ) : null}
+      {/* {isAdding ? HideButton : null} */}
+
+      {items.map((post, i) => (
+        <div className="post-container" key={i}>
           <h2>{post.name}</h2>
           <p>{post.category}</p>
           <p>{post.description}</p>
           <p>{post.price_per_day}</p>
           <p>{post.rental_period}</p>
 
-        
-        
-          <button onClick={() => ownerSelectItem(post.item_id)}>Edit Item</button>
+          <button onClick={() => ownerSelectItem(post.item_id)}>
+            Edit Item
+          </button>
 
-        
-          <button onClick={() => ownerDeleteItem(post.item_id)}>Delete Item</button>
-        
-       
-        
-  
+          <button onClick={() => ownerDeleteItem(post.item_id)}>
+            Delete Item
+          </button>
         </div>
-        ))}
-      </div>
-    )
-  }
+      ))}
+    </div>
+  );
+}
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     message: state.message,
     items: state.items,
@@ -206,7 +205,7 @@ const mapStateToProps = state => {
     isEditing: state.isEditing,
     isAdding: state.isAdding,
   };
-}
+};
 export default connect(mapStateToProps, {
   ownerFetchData,
   ownerSelectItem,
