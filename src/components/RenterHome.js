@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 const initialFormValues = {
   search: "",
-  location: "",
+  location: "zipcode",
 };
 
 
@@ -27,6 +27,7 @@ const RenterHome = (props) => {
 
   const formSubmit = () => {
     let location = '';
+    console.log(formValues.location);
     if (formValues.location === 'zipcode') {
       location = user.zipcode;
     } else if (formValues.location === 'city') {
