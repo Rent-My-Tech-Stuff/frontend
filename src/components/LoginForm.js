@@ -82,7 +82,7 @@ const LoginForm = (props) => {
 
                 <label> Password
                 <input 
-                    type="text"
+                    type="password"
                     name="password"
                     values={values.password}
                     onChange={onChange}

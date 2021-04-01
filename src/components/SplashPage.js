@@ -56,7 +56,7 @@ function SplashPage() {
     @import url('https://fonts.googleapis.com/css2?family=B612+Mono&display=swap');
     </style>
     <Img imageUrl="https://i.pinimg.com/736x/7f/99/cb/7f99cbd17100174bb26d9433e7ed1388.jpg">
-      <h1>App Name Here</h1>
+      <h1>Rent My Tech Stuff</h1>
       <Style>
       <StyledLink to="/login">Login</StyledLink>
       <StyledLink to="/register">Register Now</StyledLink>
