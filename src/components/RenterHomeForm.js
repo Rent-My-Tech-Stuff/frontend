@@ -26,7 +26,7 @@ const RenterHomeForm = (props) => {
       <form className="profileFormContainer" onSubmit={onSubmit}>
         <StyledDropdown>
           <label>
-            Filter Results
+            Find items in my
             <select
               values={values.location}
               name="location"
@@ -43,7 +43,7 @@ const RenterHomeForm = (props) => {
         </StyledDropdown>
         <StyledSearch>
           <label>
-            Search Bar
+            containing
             <input
               values={input}
               onChange={onChange}
