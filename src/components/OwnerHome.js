@@ -14,7 +14,66 @@ import {
 } from "../actions";
 
 //styling start
-const StyledPost = styled.div``;
+const Img = styled.div`
+  background-image: linear-gradient(
+      rgba(255, 0, 195, 0.3),
+      rgba(255, 0, 195, 0.3)
+    ),
+    url(${(props) => props.imageUrl});
+  height: 100%;
+  background-position: center 40px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-grow: 1;
+
+  button{
+    padding: 1rem;
+    font-family: "B612 mono";
+    color: #6943d5;
+    font-size: 1rem;
+    margin: 1rem;
+    border: 3px solid #6943d5;
+    border-radius: 20%;
+    opacity: 0.9;
+  }
+
+  h1{
+font-family: "B612 mono";
+background-color: #9D94ED;
+font-size: 1.4rem;
+margin-bottom: 1rem;
+padding: 1rem;
+color: white;
+  }
+`;
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: collumn;
+  flex-wrap: wrap;
+`;
+
+const StyledCard = styled.div`
+  background-color: white;
+  opacity: 0.7;
+  border-radius: 10%;
+  flex-grow: 1;
+  justify-content: flex-start;
+  width: 20rem;
+  height: 40%;
+  margin: 3rem;
+  font-family: "B612 mono";
+
+  button {
+    padding: 1rem;
+    font-family: "B612 mono";
+    color: #6943d5;
+    font-size: 1rem;
+    margin: 1rem;
+    border: 3px solid #6943d5;
+    border-radius: 20%;
+  }
+`;
 //styling end
 
 const initialFormValues = {
@@ -150,48 +209,55 @@ function OwnerHome(props) {
   //   }, [formValues])
 
   return (
-    <div className="owner-container">
-      <h1>Owner Home</h1>
-      {message}
+    <Img imageUrl="https://i.pinimg.com/736x/7f/99/cb/7f99cbd17100174bb26d9433e7ed1388.jpg">
+      <style>
+        @import
+        url('https://fonts.googleapis.com/css2?family=B612+Mono&display=swap');
+      </style>
+      <div className="owner-container">
+        <h1>Owner Home</h1>
+        {message}
 
-      <button className="addButton" onClick={() => ownerNewItem()}>
-        Add New Item
-      </button>
+        <button className="addButton" onClick={() => ownerNewItem()}>
+          Add New Item
+        </button>
 
-      <h2>
-        {isAdding && "Add Item"}
-        {isEditing && "Edit Item"}
-      </h2>
-      {isAdding || isEditing ? (
-        <div>
-          <OwnerHomeForm
-            values={formValues}
-            setFormValues={setFormValues}
-            submit={submit}
-          />
-          <button onClick={() => ownerCancel()}>Cancel</button>
-        </div>
-      ) : null}
-      {/* {isAdding ? HideButton : null} */}
+        <h2>
+          {isAdding && "Add Item"}
+          {isEditing && "Edit Item"}
+        </h2>
+        {isAdding || isEditing ? (
+          <div>
+            <OwnerHomeForm
+              values={formValues}
+              setFormValues={setFormValues}
+              submit={submit}
+            />
+            <button onClick={() => ownerCancel()}>Cancel</button>
+          </div>
+        ) : null}
+        {/* {isAdding ? HideButton : null} */}
+        <StyledDiv>
+          {items.map((post, i) => (
+            <StyledCard className="post-container" key={i}>
+              <h2>{post.name}</h2>
+              <p>{post.category}</p>
+              <p>{post.description}</p>
+              <p>${post.price_per_day}</p>
+              <p>{post.rental_period}</p>
 
-      {items.map((post, i) => (
-        <div className="post-container" key={i}>
-          <h2>{post.name}</h2>
-          <p>{post.category}</p>
-          <p>{post.description}</p>
-          <p>{post.price_per_day}</p>
-          <p>{post.rental_period}</p>
+              <button onClick={() => ownerSelectItem(post.item_id)}>
+                Edit Item
+              </button>
 
-          <button onClick={() => ownerSelectItem(post.item_id)}>
-            Edit Item
-          </button>
-
-          <button onClick={() => ownerDeleteItem(post.item_id)}>
-            Delete Item
-          </button>
-        </div>
-      ))}
-    </div>
+              <button onClick={() => ownerDeleteItem(post.item_id)}>
+                Delete Item
+              </button>
+            </StyledCard>
+          ))}
+        </StyledDiv>
+      </div>
+    </Img>
   );
 }
 

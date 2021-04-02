@@ -1,16 +1,42 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import RenterHomeForm from "./RenterHomeForm";
-
+import styled from 'styled-components'
 import {connect} from 'react-redux';
 import { renterSearch, renterSelect } from "../actions/index";
 import { useDispatch } from "react-redux";
+
+const Img = styled.div`
+background-image: linear-gradient(rgba(255,0,195,0.3), rgba(255,0,195,0.3)), url(${props => props.imageUrl});
+height: 100%;
+background-position: center 40px;
+background-repeat: no-repeat;
+background-size: cover;
+flex-grow: 1;
+`
+
+const StyledDiv = styled.div`
+display: flex;
+flex-direction: collumn;
+flex-wrap: wrap;`
+
+
+const StyledCard = styled.div`
+background-color: white;
+opacity: 0.7;
+border-radius: 10%;
+flex-grow: 1;
+justify-content: flex-start;
+width: 20rem;
+height: 40%;
+margin: 3rem;
+font-family: "B612 mono";
+`
 
 const initialFormValues = {
   search: "",
   location: "zipcode",
 };
-
 
 const RenterHome = (props) => {
   const {
@@ -51,26 +77,32 @@ const RenterHome = (props) => {
     });
   };
   return (
-    <div>
+    <Img imageUrl="https://i.pinimg.com/736x/7f/99/cb/7f99cbd17100174bb26d9433e7ed1388.jpg">
+    
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=B612+Mono&display=swap');
+    </style>
       <RenterHomeForm
         values={formValues}
         change={inputChange}
         submit={formSubmit}
       />
       {message}
-      <div className="itemResults" >
+      <StyledDiv className="itemResults" >
         {items &&
           items.map((item, i) => (
-            <div className="itemCard" key={i} 
+            <StyledCard className="itemCard" key={i} 
             onClick={(e) => handleDisplayClick(e, item)}>
               <h2>{item.name}</h2>
-              <p>${item.price_per_day} per day</p>
+              <h3>${item.price_per_day} per day</h3>
               <p>located in {item.city}</p>
-              <p>{item.description}</p> 
-            </div>
+              <p>{item.description}</p>
+
+            </StyledCard>
           ))}
-      </div>
-    </div>
+      </StyledDiv>
+    
+    </Img>
   );
 }
 

@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const StyledPage = styled.div``;
-const StyledSearch = styled.div``;
-const StyledDropdown = styled.div``;
+const StyledPage = styled.div`
+margin-top: 1rem;
+font-family: "B612 mono";
+background-color: #9D94ED;
+font-size: 1.4rem;
+`
+
+const StyledSearch = styled.div`
+margin-top: 2rem;`;
+const StyledDropdown = styled.div`
+margin-top: 0rem;
+`;
 
 
 const RenterHomeForm = (props) => {
@@ -32,11 +41,9 @@ const RenterHomeForm = (props) => {
               name="location"
               onChange={onChange}
             >
-              {/* <option value="">-------</option> */}
               <option value="zipcode">zip code</option>
               <option value="city">city</option>
               <option value="state">state</option>
-              {/* <option value="anywhere">anywhere</option> */}
               
             </select>
           </label>
